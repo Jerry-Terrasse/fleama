@@ -1,0 +1,152 @@
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2023/10/13 17:36:16                          */
+/*==============================================================*/
+
+
+/*==============================================================*/
+/* Table: cart                                                  */
+/*==============================================================*/
+create table cart
+(
+   user_id              int not null,
+   item_id              int not null,
+   cart_id              int not null,
+   primary key (user_id, item_id)
+);
+
+/*==============================================================*/
+/* Table: complaints                                            */
+/*==============================================================*/
+create table complaints
+(
+   complaint_id         int not null,
+   user_id              int not null,
+   order_id             int not null,
+   session_id           int not null,
+   complaint_state      numeric(2,0) not null,
+   primary key (complaint_id)
+);
+
+/*==============================================================*/
+/* Table: favorite                                              */
+/*==============================================================*/
+create table favorite
+(
+   user_id              int not null,
+   item_id              int not null,
+   favorite_id          int not null,
+   primary key (user_id, item_id)
+);
+
+/*==============================================================*/
+/* Table: items                                                 */
+/*==============================================================*/
+create table items
+(
+   item_id              int not null,
+   user_id              int not null,
+   item_name            varchar(10) not null,
+   item_price           decimal(10,2) not null,
+   item_state           numeric(2,0) not null,
+   primary key (item_id)
+);
+
+/*==============================================================*/
+/* Table: messages                                              */
+/*==============================================================*/
+create table messages
+(
+   message_id           int not null,
+   user_id              int not null,
+   session_id           int not null,
+   message_content      longtext not null,
+   primary key (message_id)
+);
+
+/*==============================================================*/
+/* Table: orders                                                */
+/*==============================================================*/
+create table orders
+(
+   order_id             int not null,
+   user_id              int not null,
+   item_id              int not null,
+   order_state          numeric(2,0) not null,
+   primary key (order_id)
+);
+
+/*==============================================================*/
+/* Table: sessions                                              */
+/*==============================================================*/
+create table sessions
+(
+   session_id           int not null,
+   session_state        numeric(2,0) not null,
+   primary key (session_id)
+);
+
+/*==============================================================*/
+/* Table: user_session                                          */
+/*==============================================================*/
+create table user_session
+(
+   session_id           int not null,
+   user_id              int not null,
+   primary key (session_id, user_id)
+);
+
+/*==============================================================*/
+/* Table: users                                                 */
+/*==============================================================*/
+create table users
+(
+   user_id              int not null,
+   username             char(10) not null,
+   password             varchar(20) not null,
+   user_state           numeric(2,0) not null,
+   primary key (user_id)
+);
+
+alter table cart add constraint FK_cart foreign key (item_id)
+      references items (item_id) on delete restrict on update restrict;
+
+alter table cart add constraint FK_cart2 foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table complaints add constraint FK_complaint_order foreign key (order_id)
+      references orders (order_id) on delete restrict on update restrict;
+
+alter table complaints add constraint FK_complaint_session foreign key (session_id)
+      references sessions (session_id) on delete restrict on update restrict;
+
+alter table complaints add constraint FK_user_complaint foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table favorite add constraint FK_favorite foreign key (item_id)
+      references items (item_id) on delete restrict on update restrict;
+
+alter table favorite add constraint FK_favorite2 foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table items add constraint FK_user_item foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table messages add constraint FK_message_user foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table messages add constraint FK_session_message foreign key (session_id)
+      references sessions (session_id) on delete restrict on update restrict;
+
+alter table orders add constraint FK_order_item foreign key (item_id)
+      references items (item_id) on delete restrict on update restrict;
+
+alter table orders add constraint FK_user_order foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
+alter table user_session add constraint FK_user_session foreign key (session_id)
+      references sessions (session_id) on delete restrict on update restrict;
+
+alter table user_session add constraint FK_user_session2 foreign key (user_id)
+      references users (user_id) on delete restrict on update restrict;
+
