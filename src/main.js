@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // 导入你的视图组件
 import VueAbout from './VueAbout.vue'
-import Home from './views/Home.vue'
+import Explore from './views/Explore.vue'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
 // import Items from './views/Items.vue'
@@ -15,7 +15,7 @@ import axios from 'axios'
 
 // 设置路由
 const routes = [
-  { path: '/', name: 'home', component: Home},
+  { path: '/', name: 'explore', component: Explore},
   { path: '/vue', name: 'vue', component: VueAbout },
   { path: '/items', name: 'items', component: () => import('./views/Items.vue') },
   { path: '/orders', name: 'orders', component: () => import('./views/Orders.vue') },

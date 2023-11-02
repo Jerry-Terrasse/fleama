@@ -25,6 +25,9 @@ import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
 import { NCard } from 'naive-ui'
 import axios from 'axios'
 import md5 from 'js-md5'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const formRef = ref(null)
 const formValue = ref({
@@ -64,8 +67,10 @@ function handleLoginClick() {
             }).then(res => {
                 console.log(res)
                 if(res.status == 200) {
-                    window.location.href = '/'
+                    router.push({ path: '/' })
                 }
+            }).catch(err => {
+                console.log(err)
             })
         } else {
             console.log('请输入用户名和密码')

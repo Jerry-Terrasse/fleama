@@ -6,22 +6,24 @@
     </n-space>
     <n-space justify="end">
       <n-button
-        size="small"
         @click="toggleTheme"
       >
-      {{ dark ? '浅色' : '深色'  }}
+      {{ dark ? '浅色主题' : '深色主题'  }}
     </n-button>
-      <n-avatar
-        round
-        :size="32"
-        src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
-      />
+      <n-avatar v-if="loggedIn" round :size="32">
+        <n-icon>
+          <person-icon />
+        </n-icon>
+      </n-avatar>
+      <n-button v-else href="/login" type="primary" @click="handleLoginClick">
+        登录
+      </n-button>
     </n-space>
   </n-layout-header>
 </template>
 
 <script setup>
-import { defineComponent, h, ref } from "vue";
+import { defineComponent, h, ref, onMounted } from "vue";
 import { NButton, NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
 import { NMenu } from "naive-ui";
@@ -30,12 +32,19 @@ import { NSpace, NAvatar, darkTheme } from "naive-ui";
 import { NImage } from "naive-ui";
 import { theme } from "../store/index.js";
 import {
-  BookOutline as BookIcon,
   PersonOutline as PersonIcon,
-  WineOutline as WineIcon,
-  HomeOutline as HomeIcon
+  TelescopeOutline as TelescopeIcon,
+  ChatboxOutline as ChatboxIcon,
+  CartOutline as CartIcon,
+  BagHandleOutline as BagIcon,
+  LogOutOutline as LogOutIcon,
 } from "@vicons/ionicons5";
 import logo from "../assets/logo.svg";
+import axios from "axios";
+import { username } from "../store/index.js";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) });
@@ -53,13 +62,13 @@ const menuOptions = [
       RouterLink,
       {
         to: {
-          name: "home",
+          name: "explore",
         }
       },
-      { default: () => "首页" }
+      { default: () => "发现" }
     ),
-    key: "home",
-    icon: renderIcon(HomeIcon)
+    key: "explore",
+    icon: renderIcon(TelescopeIcon)
   },
   {
     label: () => h(
@@ -72,6 +81,7 @@ const menuOptions = [
       { default: () => "我的商品" }
     ),
     key: "items",
+    icon: renderIcon(BagIcon)
   },
   {
     label: () => h(
@@ -84,6 +94,7 @@ const menuOptions = [
       { default: () => "我的订单" }
     ),
     key: "orders",
+    icon: renderIcon(CartIcon)
   },
   {
     label: () => h(
@@ -96,12 +107,37 @@ const menuOptions = [
       { default: () => "会话" }
     ),
     key: "sessions",
+    icon: renderIcon(ChatboxIcon)
   },
 ];
+
+
+// Login
+const loggedIn = ref(false);
+onMounted(() => {
+  axios.get('/api/login_status').then(res => {
+    if (res.status == 200) {
+      loggedIn.value = true;
+      username.value = res.data.username;
+      console.log("Logged in as " + username.value)
+    } else {
+      loggedIn.value = false;
+      username.value = null;
+      console.log("Not logged in")
+    }
+  }).catch(err => {
+    console.log(err);
+  })
+});
+
+function handleLoginClick() {
+  router.push("/login");
+}
+
 </script>
 
 <style scoped>
 .nav-menu {
-  width: 95%;
+  width: 94%;
 }
 </style>
