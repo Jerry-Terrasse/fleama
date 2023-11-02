@@ -6,6 +6,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 导入你的视图组件
 import VueAbout from './VueAbout.vue'
 import Home from './views/Home.vue'
+import VueAxios from 'vue-axios'
+import axios from 'axios'
 // import Items from './views/Items.vue'
 // import Publish from './views/Publish.vue'
 // import Profile from './views/Profile.vue'
@@ -18,10 +20,7 @@ const routes = [
   { path: '/items', name: 'items', component: () => import('./views/Items.vue') },
   { path: '/orders', name: 'orders', component: () => import('./views/Orders.vue') },
   { path: '/sessions', name: 'sessions', component: () => import('./views/Sessions.vue') },
-//   { path: '/items', component: Items },
-//   { path: '/publish', component: Publish },
-//   { path: '/profile', component: Profile },
-//   { path: '/admin/complains', component: AdminComplains },
+  { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
 ]
 
 const router = createRouter({
@@ -31,4 +30,5 @@ const router = createRouter({
 
 const app = createApp(App)
 app.use(router)  // 使用路由
+app.use(VueAxios, axios)
 app.mount('#app')

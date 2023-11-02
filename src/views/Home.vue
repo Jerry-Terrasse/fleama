@@ -1,5 +1,4 @@
 <template>
-  <div style="height: 95vh;">
   <n-space vertical size="large">
     <n-layout>
       <n-layout-header>颐和园路</n-layout-header>
@@ -33,7 +32,6 @@
       </n-layout>
     </n-layout>
   </n-space>
-  </div>
 </template>
 
 <script setup>

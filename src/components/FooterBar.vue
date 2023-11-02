@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    © 2023 二手交易平台
+    © 2023 Fleama 二手交易平台
   </div>
 </template>
   
