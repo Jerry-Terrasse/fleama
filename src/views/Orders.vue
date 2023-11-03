@@ -1,57 +1,62 @@
 <template>
-  <div style="height: 95vh;">
-  <n-space vertical size="large">
-    <n-layout>
-      <n-layout-header>颐和园路</n-layout-header>
-      <n-layout-content content-style="padding: 24px;">
-        平山道
-      </n-layout-content>
-      <n-layout-footer>成府路</n-layout-footer>
-    </n-layout>
-    <n-layout>
-      <n-layout-header>颐和园路</n-layout-header>
-      <n-layout has-sider>
-        <n-layout-sider content-style="padding: 24px;">
-          海淀桥
-        </n-layout-sider>
-        <n-layout-content content-style="padding: 24px;">
-          平山道
-        </n-layout-content>
-      </n-layout>
-      <n-layout-footer>成府路</n-layout-footer>
-    </n-layout>
-    <n-layout has-sider>
-      <n-layout-sider content-style="padding: 24px;">
-        海淀桥
-      </n-layout-sider>
-      <n-layout>
-        <n-layout-header>颐和园路</n-layout-header>
-        <n-layout-content content-style="padding: 24px;">
-          平山道
-        </n-layout-content>
-        <n-layout-footer>成府路</n-layout-footer>
-      </n-layout>
-    </n-layout>
-  </n-space>
-  </div>
+  <n-scrollbar>
+    <n-back-top :visibility-height="300"/>
+    <n-grid x-gap="12" :cols="4">
+      <n-gi :offset="1" span="2">
+        <n-h1>
+          我的订单
+        </n-h1>
+        <n-list bordered>
+          <n-list-item>
+            <template #prefix>
+              ID
+            </template>
+            商品名
+          </n-list-item>
+          <n-list-item v-for="order in orders" :key="order.id">
+            <template #prefix>
+              {{ order.id }}
+            </template>
+            <template #suffix>
+              {{ order.price }}
+              <n-button size="small" type="primary">支付</n-button>
+            </template>
+            {{ order.name }}
+          </n-list-item>
+        </n-list>
+      </n-gi>
+    </n-grid>
+  </n-scrollbar>
 </template>
 
 <script setup>
-import { NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NSpace, NLayoutSider } from 'naive-ui'
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { NGrid, NScrollbar, NGi, NList, NListItem, NCard, NBackTop, NSpace, NButton, NH1 } from 'naive-ui';
+
+const orders = ref([]);
+
+onMounted(() => {
+  axios.get('/api/orders').then(res => {
+    orders.value = res.data
+  }).catch(err => {
+    console.error(err);
+  });
+});
 </script>
 
 <style scoped>
-.n-layout-header,
-.n-layout-footer {
-  background: rgba(128, 128, 128, 0.2);
-  padding: 24px;
+.n-list-item {
+  margin-bottom: 16px;
 }
 
-.n-layout-sider {
-  background: rgba(128, 128, 128, 0.3);
+.n-h1 {
+  margin-top: 6vh;
 }
 
-.n-layout-content {
-  background: rgba(128, 128, 128, 0.4);
+h3 {
+  margin: 0;
 }
+
+/* You can continue adding styles according to your design */
 </style>

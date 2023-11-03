@@ -3,6 +3,9 @@
     <n-back-top :visibility-height="3000"/>
     <n-grid x-gap="12" :cols="4">
       <n-gi :offset="1" span="2">
+        <n-h1>
+          我的商品
+        </n-h1>
         <n-grid x-gap="12" :cols="2">
           <n-gi v-for="item in items" :key="item.id">
             <ItemCard :item="item" class="item">
@@ -18,7 +21,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import ItemCard from '../components/ItemCard.vue';
-import { NGrid, NScrollbar, NGi, NBackTop } from 'naive-ui'
+import { NGrid, NScrollbar, NGi, NBackTop, NH1 } from 'naive-ui'
 
 // test data
 const item = {
@@ -69,8 +72,12 @@ onMounted(() => {
   margin-bottom: 25px;
 }
 
+.n-h1 {
+  margin-top: 3vh;
+}
+
 .n-grid {
-  margin-top: 7vh;
+  margin-top: 3vh;
   margin-bottom: 7vh;
 }
 </style>

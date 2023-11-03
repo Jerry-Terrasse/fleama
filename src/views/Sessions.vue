@@ -1,6 +1,9 @@
 <template>
   <n-layout has-sider content-style="height: calc(100vh - 4vh); margin-top: 4vh;">
     <n-layout-sider content-style="padding: 24px;" bordered>
+      <n-h1>
+        我的会话
+      </n-h1>
       <n-menu :options="menuOptions" mode="vertical" :value="menuValue" />
     </n-layout-sider>
     <n-layout-content v-if="inChat" content-style="padding: 24px; height: 80vh;">
@@ -15,7 +18,7 @@
 
 <script setup>
 import { ref, h, defineProps, computed, onMounted } from 'vue'
-import { NMenu, NLayout, NLayoutContent, NLayoutSider, NScrollbar, NText } from 'naive-ui'
+import { NMenu, NLayout, NLayoutContent, NLayoutSider, NScrollbar, NText, NH1 } from 'naive-ui'
 import { useRouter } from 'vue-router';
 import { NInput, NButton, NSpace, useMessage } from 'naive-ui';
 import axios from 'axios';
