@@ -67,7 +67,7 @@ function handleLoginClick() {
             }).then(res => {
                 console.log(res)
                 if(res.status == 200) {
-                    router.push({ path: '/' })
+                    window.location.href = '/'
                 }
             }).catch(err => {
                 console.log(err)

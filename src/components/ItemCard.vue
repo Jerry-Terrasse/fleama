@@ -1,5 +1,13 @@
 <template>
-    <n-card :title="name" hoverable @click="handleItemClick">
+    <n-card v-if="item['id']==null" hoverable>
+        <template #cover>
+            <n-skeleton height="30vh" />
+        </template>
+        <n-text>
+            加载中...
+        </n-text>
+    </n-card>
+    <n-card v-else :title="name" hoverable @click="handleItemClick">
         <template #cover>
             <img :src="img" alt="item"/>
         </template>
@@ -11,7 +19,7 @@
 
 <script setup>
 import { ref, h, defineProps } from 'vue'
-import { NCard, NText } from 'naive-ui'
+import { NCard, NSkeleton, NText } from 'naive-ui'
 import { useRouter } from 'vue-router';
 
 const router = useRouter()

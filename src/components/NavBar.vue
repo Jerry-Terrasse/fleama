@@ -1,7 +1,11 @@
 <template>
-  <n-layout-header style="display: flex;">
-    <n-space class="nav-menu">
-      <img :src="logo" alt="logo" style="width: 30px;" href="/"/>
+  <n-layout-header style="display: flex; padding: 10px 15px 5px 5px;">
+    <n-space class="nav-menu" style="margin-left: 1vh;">
+      <img :src="logo" alt="logo" style="width: 40px;" href="/"/>
+      <div></div>
+      <n-gradient-text font-size="24px">
+        FleaMa
+      </n-gradient-text>
       <n-menu :options="menuOptions" mode="horizontal" />
     </n-space>
     <n-space justify="end">
@@ -29,7 +33,7 @@ import { RouterLink } from "vue-router";
 import { NMenu } from "naive-ui";
 import { NLayoutHeader } from "naive-ui";
 import { NSpace, NAvatar, darkTheme } from "naive-ui";
-import { NImage } from "naive-ui";
+import { NImage, NText, NGradientText } from "naive-ui";
 import { theme } from "../store/index.js";
 import {
   PersonOutline as PersonIcon,
@@ -39,7 +43,7 @@ import {
   BagHandleOutline as BagIcon,
   LogOutOutline as LogOutIcon,
 } from "@vicons/ionicons5";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.webp";
 import axios from "axios";
 import { username } from "../store/index.js";
 import { useRouter } from "vue-router";
@@ -75,7 +79,7 @@ const menuOptions = [
       RouterLink,
       {
         to: {
-          name: "items",
+          name: "my_items",
         }
       },
       { default: () => "我的商品" }
@@ -138,6 +142,13 @@ function handleLoginClick() {
 
 <style scoped>
 .nav-menu {
-  width: 94%;
+  width: 90%;
+}
+
+.n-layout-header {
+  height: 4vh;
+  padding: 0;
+  position: fixed;
+  z-index: 1000;
 }
 </style>

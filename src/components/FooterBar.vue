@@ -1,15 +1,12 @@
 <template>
-  <div class="footer">
+  <n-layout-footer class="footer">
     © 2023 Fleama 二手交易平台
-  </div>
+  </n-layout-footer>
 </template>
   
-<script>
+<script setup>
 import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'FooterBar'
-})
+import { NLayoutFooter } from 'naive-ui'
 </script>
   
 <style scoped>
@@ -17,6 +14,7 @@ export default defineComponent({
   text-align: center;
   padding: 20px 0;
   height: 1vh;
+  position: fixed;
 }
 </style>
   

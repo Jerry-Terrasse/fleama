@@ -17,7 +17,8 @@ import axios from 'axios'
 const routes = [
   { path: '/', name: 'explore', component: Explore},
   { path: '/vue', name: 'vue', component: VueAbout },
-  { path: '/items', name: 'items', component: () => import('./views/Items.vue') },
+  { path: '/my_items', name: 'my_items', component: () => import('./views/MyItems.vue') },
+  // { path: '/my_items/:id', name: 'my_items', component: () => import('./views/MyItems.vue') },
   { path: '/orders', name: 'orders', component: () => import('./views/Orders.vue') },
   { path: '/sessions', name: 'sessions', component: () => import('./views/Sessions.vue') },
   { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
