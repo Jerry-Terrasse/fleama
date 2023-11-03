@@ -11,6 +11,9 @@
         <n-button @click="toggleTheme">
           {{ dark ? '浅色主题' : '深色主题' }}
         </n-button>
+        <n-button v-if="!loggedIn" type="primary">
+          注册
+        </n-button>
         <n-avatar v-if="loggedIn" round :size="32">
           <n-icon>
             <person-icon />

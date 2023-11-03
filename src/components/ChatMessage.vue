@@ -2,7 +2,10 @@
     <n-space horizontal>
         <n-avatar size="large" round>
             <n-icon>
-                <person-icon />
+                <chat-icon v-if="user === 'user1:'" />
+                <person-add-icon v-else-if="user === 'user2:'" />
+                <send-icon v-else-if="user === 'user3:'" />
+                <person-icon v-else />
             </n-icon>
         </n-avatar>
         <n-card :title="user">
@@ -14,9 +17,14 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, computed } from 'vue'
 import { NAvatar, NIcon, NCard, NSpace, NText } from 'naive-ui';
-import { PersonOutline as PersonIcon } from '@vicons/ionicons5';
+import {
+    PersonOutline as PersonIcon,
+    ChatbubbleEllipsesOutline as ChatIcon,
+    SendOutline as SendIcon,
+    PersonAddOutline as PersonAddIcon,
+} from '@vicons/ionicons5';
 
 const props = defineProps({
     message: {
@@ -25,7 +33,7 @@ const props = defineProps({
     }
 })
 const content = ref(props.message.content)
-const user = props.message.user + ':'
+const user = computed(() => props.message.user + ':')
 
 </script>
 

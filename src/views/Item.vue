@@ -11,6 +11,10 @@
                         {{ item.description }}
                     </n-text>
                 </n-card>
+                <n-space horizontal style="margin-top: 1em;">
+                    <n-button type="primary" size="large" @click="addCart">加入购物车</n-button>
+                    <n-button type="primary" size="large" @click="buy">购买</n-button>
+                </n-space>
             </n-gi>
         </n-grid>
     </n-scrollbar>
@@ -19,7 +23,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-import { NGrid, NScrollbar, NGi, NBackTop, NCard, NImageGroup, NImage } from 'naive-ui'
+import { NGrid, NScrollbar, NGi, NBackTop, NCard, NImageGroup, NImage, NText, NButton, NSpace } from 'naive-ui'
 import { useRoute, useRouter } from 'vue-router';
 import { useMessage } from 'naive-ui';
 import { username } from '../store';
@@ -51,6 +55,10 @@ onMounted(async () => {
         console.error(err);
     }
 });
+
+function buy() {
+    router.push('/orders');
+}
 </script>
   
 <style scoped>
