@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import ItemCard from '../components/ItemCard.vue';
 import { NGrid, NScrollbar, NGi, NBackTop, NCarousel, NCarouselItem, NLayout } from 'naive-ui'
 import axios from 'axios';
@@ -44,20 +44,22 @@ const item = {
 }
 
 const items = ref([])
-axios.get('/api/explore').then(res => {
-  console.log('items', res)
-  items.value = res.data.map(info => {
-    const img_id = Math.floor(Math.random() * 6) + 1;
-    return {
-      id: info.item_id,
-      url: '/item/' + info.item_id,
-      name: info.item_name,
-      price: info.item_price,
-      img: '/items/' + img_id + '.webp'
-    }
+onMounted(() => {
+  axios.get('/api/explore').then(res => {
+    console.log('items', res)
+    items.value = res.data.map(info => {
+      const img_id = Math.floor(Math.random() * 6) + 1;
+      return {
+        id: info.item_id,
+        url: '/item/' + info.item_id,
+        name: info.item_name,
+        price: info.item_price,
+        img: '/items/' + img_id + '.webp'
+      }
+    })
+  }).catch(err => {
+    console.log(err)
   })
-}).catch(err => {
-  console.log(err)
 })
 
 const items_left = computed(() => {

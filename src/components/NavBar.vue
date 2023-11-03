@@ -1,27 +1,25 @@
 <template>
-  <n-layout-header style="display: flex; padding: 10px 15px 5px 5px;">
+  <n-layout-header style="padding: 10px 15px 50px 5px;" bordered>
     <n-space class="nav-menu" style="margin-left: 1vh;">
-      <img :src="logo" alt="logo" style="width: 40px;" href="/"/>
+      <img :src="logo" alt="logo" style="width: 40px;" href="/" />
       <div></div>
       <n-gradient-text font-size="24px">
         FleaMa
       </n-gradient-text>
       <n-menu :options="menuOptions" mode="horizontal" />
-    </n-space>
-    <n-space justify="end">
-      <n-button
-        @click="toggleTheme"
-      >
-      {{ dark ? '浅色主题' : '深色主题'  }}
-    </n-button>
-      <n-avatar v-if="loggedIn" round :size="32">
-        <n-icon>
-          <person-icon />
-        </n-icon>
-      </n-avatar>
-      <n-button v-else href="/login" type="primary" @click="handleLoginClick">
-        登录
-      </n-button>
+      <n-space justify="end" class="avatar">
+        <n-button @click="toggleTheme">
+          {{ dark ? '浅色主题' : '深色主题' }}
+        </n-button>
+        <n-avatar v-if="loggedIn" round :size="32">
+          <n-icon>
+            <person-icon />
+          </n-icon>
+        </n-avatar>
+        <n-button v-else href="/login" type="primary" @click="handleLoginClick">
+          登录
+        </n-button>
+      </n-space>
     </n-space>
   </n-layout-header>
 </template>
@@ -142,7 +140,7 @@ function handleLoginClick() {
 
 <style scoped>
 .nav-menu {
-  width: 90%;
+  width: auto;
 }
 
 .n-layout-header {
@@ -150,5 +148,10 @@ function handleLoginClick() {
   padding: 0;
   position: fixed;
   z-index: 1000;
+}
+
+.avatar {
+  position: absolute;
+  right: 2vh;
 }
 </style>

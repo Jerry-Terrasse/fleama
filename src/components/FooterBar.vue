@@ -1,5 +1,5 @@
 <template>
-  <n-layout-footer class="footer">
+  <n-layout-footer class="footer" bordered>
     © 2023 Fleama 二手交易平台
   </n-layout-footer>
 </template>
@@ -11,10 +11,11 @@ import { NLayoutFooter } from 'naive-ui'
   
 <style scoped>
 .footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   text-align: center;
-  padding: 20px 0;
-  height: 1vh;
-  position: fixed;
+  height: 2vh;
 }
 </style>
   

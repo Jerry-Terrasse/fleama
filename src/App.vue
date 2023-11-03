@@ -1,12 +1,12 @@
 <template>
   <n-config-provider :theme="theme">
-    <n-space vertical size="large">
-      <n-layout>
+    <n-layout :position="absolute"
+      content-style="min-height: calc(100vh); display: flex; flex-direction: column;"
+    >
         <NavBar />
         <router-view />
         <FooterBar />
-      </n-layout>
-    </n-space>
+    </n-layout>
   </n-config-provider>
   <!-- <n-config-provider :theme="theme">
     <n-layout>
@@ -42,5 +42,4 @@ import { theme } from './store/index.js'
 </script>
 
 <style scoped>
-/* 样式 */
 </style>
