@@ -15,6 +15,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import ItemCard from '../components/ItemCard.vue';
 import { NGrid, NScrollbar, NGi, NBackTop } from 'naive-ui'
 
@@ -27,19 +29,24 @@ const item = {
   img: '/items/1.webp'
 }
 
-const items = [item]
-for (let i = 0; i < 100; i++) {
-  const random_price = Math.floor(Math.random() * 1000) / 100;
-  const random_id = Math.floor(Math.random() * 6) + 1;
-  items.push({
-    id: i + 2,
-    url: '/item/' + (i + 2),
-    name: 'Item_' + (i * 9947 ^ 12838 + 2),
-    price: random_price,
-    img: '/items/' + random_id + '.webp'
+const items = ref([])
+onMounted(() => {
+  axios.get('/api/my_items').then(res => {
+    console.log('items', res)
+    items.value.push(...res.data.map(info => {
+      const img_id = info.item_id * 998244353 % 6 + 1
+      return {
+        id: info.item_id,
+        url: '/item/' + info.item_id,
+        name: info.item_name,
+        price: info.item_price,
+        img: '/items/' + img_id + '.webp'
+      }
+    }))
+  }).catch(err => {
+    console.log(err)
   })
-}
-
+})
 
 </script>
 
@@ -60,5 +67,10 @@ for (let i = 0; i < 100; i++) {
 
 .item {
   margin-bottom: 25px;
+}
+
+.n-grid {
+  margin-top: 7vh;
+  margin-bottom: 7vh;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <n-scrollbar>
-    <n-back-top :visibility-height="3000" />
+    <n-back-top
+    />
     <!-- <n-grid x-gap="12" :cols="4">
       <n-gi :offset="1" span="2">
         prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
@@ -48,7 +49,7 @@ onMounted(() => {
   axios.get('/api/explore').then(res => {
     console.log('items', res)
     items.value = res.data.map(info => {
-      const img_id = Math.floor(Math.random() * 6) + 1;
+      const img_id = info.item_id * 998244353 % 6 + 1
       return {
         id: info.item_id,
         url: '/item/' + info.item_id,
