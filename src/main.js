@@ -22,6 +22,7 @@ const routes = [
   { path: '/orders', name: 'orders', component: () => import('./views/Orders.vue') },
   { path: '/sessions/:id?', name: 'sessions', component: () => import('./views/Sessions.vue'), props: true },
   { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
+  { path: '/item/:id', name: 'item', component: () => import('./views/Item.vue'), props: true },
 ]
 
 const router = createRouter({

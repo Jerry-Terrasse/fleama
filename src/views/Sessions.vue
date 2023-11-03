@@ -1,9 +1,9 @@
 <template>
   <n-layout has-sider content-style="height: calc(100vh - 4vh); margin-top: 4vh;">
     <n-layout-sider content-style="padding: 24px;" bordered>
-      <n-menu :options="menuOptions" mode="vertical" />
+      <n-menu :options="menuOptions" mode="vertical" :value="menuValue" />
     </n-layout-sider>
-    <n-layout-content v-if="inChat" content-style="padding: 24px;">
+    <n-layout-content v-if="inChat" content-style="padding: 24px; height: 80vh;">
       <ChatMessage v-for="message in messages" :key="message.id" :message="message" />
       <n-space class="input-area">
         <n-input v-model:value="inputText" placeholder="输入消息" />
@@ -14,10 +14,10 @@
 </template>
 
 <script setup>
-import { ref, h, defineProps, computed } from 'vue'
+import { ref, h, defineProps, computed, onMounted } from 'vue'
 import { NMenu, NLayout, NLayoutContent, NLayoutSider, NScrollbar, NText } from 'naive-ui'
 import { useRouter } from 'vue-router';
-import { NInput, NButton, NSpace } from 'naive-ui';
+import { NInput, NButton, NSpace, useMessage } from 'naive-ui';
 import axios from 'axios';
 import ChatMessage from '../components/ChatMessage.vue';
 
@@ -33,6 +33,9 @@ const inChat = computed(() => {
   return props.id !== undefined
 })
 const messages = ref([])
+const inputText = ref('')
+const uiMessage = useMessage()
+const menuValue = ref(props.id)
 
 const menuOptions = ref([])
 axios.get('/api/sessions').then(res => {
@@ -47,25 +50,50 @@ axios.get('/api/sessions').then(res => {
           onClick: (e) => {
             e.preventDefault();
             router.push('/sessions/' + info.session_id);
+            reloadMessages();
           }
         },
         { default: () => info.peoples }
       ),
-      key: info.id,
+      key: info.session_id,
     }
   })
 }).catch(err => {
   console.log(err)
 })
 
-if(props.id !== undefined) {
-  axios.get('/api/messages/' + props.id).then(res => {
-    console.log('messages', res)
-    messages.value = res.data
+function reloadMessages() {
+  if(props.id !== undefined) {
+    axios.get('/api/messages/' + props.id).then(res => {
+      console.log('messages', res)
+      messages.value = res.data
+    }).catch(err => {
+      uiMessage.error('加载消息失败' + err)
+      console.log(err)
+    })
+  }
+}
+
+
+function sendMessage() {
+  if(props.id === undefined) {
+    return
+  }
+  axios.post('/api/messages/' + props.id, {
+    content: inputText.value
+  }).then(res => {
+    inputText.value = ''
+    reloadMessages()
   }).catch(err => {
+    uiMessage.error('发送失败' + err)
     console.log(err)
   })
 }
+
+onMounted(() => {
+  reloadMessages()
+})
+
 </script>
 
 <style scoped>

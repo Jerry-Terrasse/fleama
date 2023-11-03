@@ -1,12 +1,12 @@
 <template>
   <n-config-provider :theme="theme">
-    <n-layout :position="absolute"
-      content-style="min-height: calc(100vh); display: flex; flex-direction: column;"
-    >
+    <n-message-provider>
+      <n-layout :position="absolute" content-style="min-height: calc(100vh); display: flex; flex-direction: column;">
         <NavBar />
         <router-view />
         <FooterBar />
-    </n-layout>
+      </n-layout>
+    </n-message-provider>
   </n-config-provider>
   <!-- <n-config-provider :theme="theme">
     <n-layout>
@@ -35,11 +35,10 @@ import 'vfonts/FiraCode.css'
 import { defineComponent } from 'vue'
 import NavBar from './components/NavBar.vue'
 import FooterBar from './components/FooterBar.vue'
-import { NConfigProvider, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NSpace } from 'naive-ui'
+import { NConfigProvider, NLayout, NLayoutHeader, NLayoutContent, NLayoutFooter, NSpace, NMessageProvider } from 'naive-ui'
 import { RouterView } from 'vue-router'
 import { darkTheme } from 'naive-ui'
 import { theme } from './store/index.js'
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
